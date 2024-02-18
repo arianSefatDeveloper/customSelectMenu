@@ -21,7 +21,7 @@ let countries = ["Afghanistan", "Algeria", "Argentina", "Australia", "Bangladesh
         let li = null
         countries.forEach((country)=>{
             li = `<li onclick="updateName(this)">${country}</li>`
-            console.log(li);
+            
             options.insertAdjacentHTML("beforeend" , li)
         })
      }    
@@ -38,7 +38,7 @@ function updateName(el){
     inputElem.value = ""
 
         for( let option of options.children){
-            console.log(option);
+   
             if(option.innerHTML === el.textContent){
 
                 option.classList.add("selected")
@@ -50,7 +50,19 @@ function updateName(el){
             }
 
     }
+    addCountries()
 
 
 }
+
+
+inputElem.addEventListener("keyup"  , ()=>{
+    let searchWord = inputElem.value.toLowerCase()
+
+    let userContris = countries.filter(country => country.toLowerCase().startsWith(searchWord))
+    .map(country => `<li onclick="updateName(this)">${country}</li>`).join("")
+    options.innerHTML = userContris ? userContris : `<p style="margin-top=10px;">Oops! Notfound</p>`
+    console.log(userContris);
+
+})
 window.addEventListener("load" , addCountries())
